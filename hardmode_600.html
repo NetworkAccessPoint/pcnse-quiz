@@ -62,11 +62,28 @@
         .link-button:hover {
             background-color: #0056b3;
         }
-          
+                /* Correct count box style */
+        #correct-count-box {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
 </head>
 <body>
-
+        <!-- Correct count box -->
+    <div id="correct-count-box">
+        Correct Answers: <span id="correct-count">0</span>
+    </div>
     <div class="link-container">
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/200" class="link-button">1~200 문제로 이동</a>
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/400" class="link-button">201~400 문제로 이동</a>
@@ -3267,40 +3284,57 @@ Which set of steps should the engineer take to accomplish this objective?</p>
         <div class="answer" id="answer606"></div>
     </div>
     
-        <script>
-        function checkAnswer(questionName, correctAnswers, resultId, answerId) {
-            const selectedAnswers = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
-                                          .map(input => input.value);
-            const resultElement = document.getElementById(resultId);
-            const answerElement = document.getElementById(answerId);
+    <script>
 
-            // Check if the selected answers match the correct answers
-            if (arraysEqual(selectedAnswers, correctAnswers)) {
-                resultElement.innerText = 'Correct!';
-                resultElement.style.color = 'green';
-            } else {
-                resultElement.innerText = 'Incorrect!';
-                resultElement.style.color = 'red';
+  function checkAnswer(questionName, correctAnswers, resultId, answerId) {
+    // 선택된 체크박스들을 가져옴
+    const checkboxes = document.querySelectorAll(`input[name="${questionName}"]:checked`);
+    let selectedAnswers = Array.from(checkboxes).map(cb => cb.value);
 
-                // 페이지 새로고침
-                setTimeout(() => {
-                    location.reload();
-                }, 1000); // 1초 후 새로고침
-            }
+    // 선택된 답안이 정답과 일치하는지 확인
+    const isCorrect = selectedAnswers.length === correctAnswers.length &&
+             selectedAnswers.every(answer => correctAnswers.includes(answer));
 
-            // Show the correct answers
-            answerElement.innerText = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'}: ${correctAnswers.map(letter => 
-                document.querySelector(`input[name="${questionName}"][value="${letter}"]`).parentElement.innerText.trim()).join('  ,  ')}`;
-        }
+    // 결과를 표시할 영역
+    const resultDiv = document.getElementById(resultId);
+    const answerDiv = document.getElementById(answerId);
 
-        function arraysEqual(a, b) {
-            if (a.length !== b.length) return false;
-            a.sort();
-            b.sort();
-            return a.every((val, index) => val === b[index]);
-        }
+    if (isCorrect) {
+      resultDiv.textContent = "correct!";
+      resultDiv.style.color = "green";
+    } else {
+        resultDiv.textContent = 'Incorrect!';
+        resultDiv.style.color = 'red';
 
-        // 각 문제별로 currentIndex를 관리하기 위한 객체
+        // 페이지 새로고침
+        setTimeout(() => {
+            location.reload();
+        }, 1000); // 1초 후 새로고침
+    }
+
+    // 정답 표시
+    answerDiv.textContent = "Correct answers: " + correctAnswers.join(", ");
+    
+    // 화면에 표시된 결과를 기반으로 점수 업데이트
+    updateScore();
+  }
+
+  function updateScore() {
+    // 모든 결과를 가져옴
+    const results = document.querySelectorAll('.result');
+    let correctScore = 0;
+
+    // 각 결과를 확인하여 화면에 표시된 "correct!"와 "incorrect!"만 카운트
+    results.forEach(result => {
+      if (result.textContent === "correct!") {
+        correctScore++;
+      }
+    });
+
+    // 점수를 화면의 count-box에 업데이트
+    document.getElementById('correct-count').textContent = correctScore;
+  }
+                 // 각 문제별로 currentIndex를 관리하기 위한 객체
         const currentIndexes = {};
 
         function addToOrder(letter, questionId, numOptions) {
@@ -3338,7 +3372,7 @@ Which set of steps should the engineer take to accomplish this objective?</p>
             for (let i = 1; i <= numOptions; i++) {
                 document.getElementById('order' + i + '_' + questionId).value = '';
             }
-        }         
+        }     
     </script>
 </body>
 </html>
