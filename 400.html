@@ -41,9 +41,35 @@
         .buttons button {
             margin-right: 10px;
         }
+        .link-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .link-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            text-align: center;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .link-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
-
+<body>
+    <div class="link-container">
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/200" class="link-button">1~200 문제로 이동</a>
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/400" class="link-button">201~400 문제로 이동</a>
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/600" class="link-button">401~606 문제로 이동</a>
+    </div>
   <div class="question">
         <p>Which value in the Application column indicates UDP traffic that did not match an App-ID signature?</p>
         <div class="options">
