@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .question {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .answer {
+            margin-top: 10px;
+            color: blue;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .options {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            margin-top: 10px;
+        }
+        .buttons button {
+            margin-right: 10px;
+        }
+
+        /* 우측 상단에 고정된 카운트 박스 스타일 */
+        #incorrect-count-box {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="incorrect-count-box">
+        Total Incorrect Answers: <span id="incorrect-count">0</span>
+    </div>
+
+    <div class="question">
+        <p>Which value in the Application column indicates UDP traffic that did not match an App-ID signature?</p>
+        <div class="options">
+            <label><input type="checkbox" name="q201" value="A"> A. unknown-udp </label><br>
+            <label><input type="checkbox" name="q201" value="B"> B. unknown-ip </label><br>
+            <label><input type="checkbox" name="q201" value="C"> C. incomplete </label><br>
+            <label><input type="checkbox" name="q201" value="D"> D. not-applicable </label><br>
+        </div>
+        <button onclick="checkAnswer('q201', ['A'], 'result201', 'answer201')">Submit Answer</button>
+        <div class="result" id="result201"></div>
+        <div class="answer" id="answer201"></div>
+    </div>
+    
+    <div class="question">
+        <p>What are three valid qualifiers for a Decryption Policy Rule match? <p style="color:#FF0000;">(Choose three.)</p></p>
+        <div class="options">
+            <label><input type="checkbox" name="q202" value="A"> A. App-ID </label><br>
+            <label><input type="checkbox" name="q202" value="B"> B. Custom URL Category </label><br>
+            <label><input type="checkbox" name="q202" value="C"> C. User-ID </label><br>
+            <label><input type="checkbox" name="q202" value="D"> D. Destination Zone </label><br>
+            <label><input type="checkbox" name="q202" value="E"> E. Source Interface </label><br>
+        </div>
+        <button onclick="checkAnswer('q202', ['B', 'C', 'D'], 'result202', 'answer202')">Submit Answer</button>
+        <div class="result" id="result202"></div>
+        <div class="answer" id="answer202"></div>
+    </div>
+    
+    <div class="question">
+        <p>An administrator needs to gather information about the CPU utilization on both the management plane and the data plane.
+Where does the administrator view the desired data?</p>
+        <div class="options">
+            <label><input type="checkbox" name="q203" value="A"> A. Resources Widget on the Dashboard </label><br>
+            <label><input type="checkbox" name="q203" value="B"> B. Monitor > Utilization </label><br>
+            <label><input type="checkbox" name="q203" value="C"> C. Support > Resources </label><br>
+            <label><input type="checkbox" name="q203" value="D"> D. Application Command and Control Center </label><br>
+        </div>
+        <button onclick="checkAnswer('q203', ['A'], 'result203', 'answer203')">Submit Answer</button>
+        <div class="result" id="result203"></div>
+        <div class="answer" id="answer203"></div>
+    </div>
+    
+    <div class="question">
+        <p>Which CLI command displays the physical media that are connected to ethernet1/8?</p>
+        <div class="options">
+            <label><input type="checkbox" name="q204" value="A"> A. > show system state filter-pretty sys.s1.p8.stats </label><br>
+            <label><input type="checkbox" name="q204" value="B"> B. > show system state filter-pretty sys.s1.p8.med </label><br>
+            <label><input type="checkbox" name="q204" value="C"> C. > show interface ethernet1/8 </label><br>
+            <label><input type="checkbox" name="q204" value="D"> D. > show system state filter-pretty sys.s1.p8.phy </label><br>
+        </div>
+        <button onclick="checkAnswer('q204', ['D'], 'result204', 'answer204')">Submit Answer</button>
+        <div class="result" id="result204"></div>
+        <div class="answer" id="answer204"></div>
+    </div>
+    
+    <div class="question">
+        <p>A variable name must start with which symbol?</p>
+        <div class="options">
+            <label><input type="checkbox" name="q205" value="A"> A. $ </label><br>
+            <label><input type="checkbox" name="q205" value="B"> B. ! </label><br>
+            <label><input type="checkbox" name="q205" value="C"> C. # </label><br>
+            <label><input type="checkbox" name="q205" value="D"> D. & </label><br>
+        </div>
+        <button onclick="checkAnswer('q205', ['A'], 'result205', 'answer205')">Submit Answer</button>
+        <div class="result" id="result205"></div>
+        <div class="answer" id="answer205"></div>
+    </div>
+    
+    <script>
+        let incorrectCount = 0; // Incorrect 카운트를 저장할 변수
+
+        function checkAnswer(questionName, correctAnswers, resultId, answerId) {
+            const selectedAnswers = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
+                                          .map(input => input.value);
+            const resultElement = document.getElementById(resultId);
+            const answerElement = document.getElementById(answerId);
+
+            // Check if the selected answers match the correct answers
+            if (arraysEqual(selectedAnswers, correctAnswers)) {
+                resultElement.innerText = 'Correct!';
+                resultElement.style.color = 'green';
+            } else {
+                resultElement.innerText = 'Incorrect!';
+                resultElement.style.color = 'red';
+                incorrectCount++; // Incorrect 카운트 증가
+                updateIncorrectCount(); // 카운트를 업데이트
+            }
+
+            // Show the correct answers
+            answerElement.innerText = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'}: ${correctAnswers.map(letter => 
+                document.querySelector(`input[name="${questionName}"][value="${letter}"]`).parentElement.innerText.trim()).join('  ,  ')}`;
+        }
+
+        function arraysEqual(a, b) {
+            if (a.length !== b.length) return false;
+            a.sort();
+            b.sort();
+            return a.every((val, index) => val === b[index]);
+        }
+
+        // Incorrect 카운트를 업데이트하는 함수
+        function updateIncorrectCount() {
+            document.getElementById('incorrect-count').innerText = incorrectCount;
+        }
+
+    </script>
+</body>
+</html>
