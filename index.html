@@ -41,14 +41,36 @@
         .buttons button {
             margin-right: 10px;
         }
+        .link-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        .link-button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            font-size: 16px;
+            text-align: center;
+            color: white;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .link-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <p> </p>
-    <a href="https://networkaccesspoint.github.io/pcnse-quiz/200">1~200 문제로 이동</a>
-    <a href="https://networkaccesspoint.github.io/pcnse-quiz/400">201~400 문제로 이동</a>
-    <a href="https://networkaccesspoint.github.io/pcnse-quiz/600">401~606 문제로 이동</a>
-    <p> </p>
+    <div class="link-container">
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/200" class="link-button">1~200 문제로 이동</a>
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/400" class="link-button">201~400 문제로 이동</a>
+        <a href="https://networkaccesspoint.github.io/pcnse-quiz/600" class="link-button">401~606 문제로 이동</a>
+    </div>
+
     <div class="question">
         <p>Which CLI command is used to simulate traffic going through the firewall and determine which Security policy rule, NAT translation, static route, or
 PBF rule will be triggered by the traffic?</p>
@@ -89,7 +111,7 @@ Which two mandatory options are used to configure a VLAN interface? <p style="co
             <label><input type="checkbox" name="q3" value="C"> C. ARP entries </label><br>
             <label><input type="checkbox" name="q3" value="D"> D. Netflow Profile </label><br>
         </div>
-        <button onclick="checkAnswer('q3', ['C', 'D'], 'result3', 'answer3')">Submit Answer</button>
+        <button onclick="checkAnswer('q3', ['A', 'B'], 'result3', 'answer3')">Submit Answer</button>
         <div class="result" id="result3"></div>
         <div class="answer" id="answer3"></div>
     </div>
@@ -2376,7 +2398,7 @@ Upon restart, the firewall fails to begin the bootstrapping process. The failure
             <label><input type="checkbox" name="q166" value="C"> C. The hostname is a required parameter, but it is missing in init-cfg.txt </label><br>
             <label><input type="checkbox" name="q166" value="D"> D. The USB must be formatted using the ext3 file system. FAT32 is not supported </label><br>
         </div>
-        <button onclick="checkAnswer('q166', ['D'], 'result166', 'answer166')">Submit Answer</button>
+        <button onclick="checkAnswer('q166', ['B'], 'result166', 'answer166')">Submit Answer</button>
         <div class="result" id="result166"></div>
         <div class="answer" id="answer166"></div>
     </div>
@@ -9047,8 +9069,6 @@ Which set of steps should the engineer take to accomplish this objective?</p>
         <div class="answer" id="answer606"></div>
     </div>
     
-
-
     <script>
         function checkAnswer(questionName, correctAnswers, resultId, answerId) {
             const selectedAnswers = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
