@@ -62,9 +62,48 @@
         .link-button:hover {
             background-color: #0056b3;
         }
+                /* Correct count box style */
+        #correct-count-box {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Incorrect count box style */
+        #incorrect-count-box {
+            position: fixed;
+            top: 55px;
+            right: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
+        <!-- Correct count box -->
+    <div id="correct-count-box">
+        Correct Answers: <span id="correct-count">0</span>
+    </div>
+
+    <!-- Incorrect count box -->
+    <div id="incorrect-count-box">
+        Incorrect Answers: <span id="incorrect-count">0</span>
+    </div>
+
     <div class="link-container">
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/200" class="link-button">1~200 문제로 이동</a>
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/400" class="link-button">201~400 문제로 이동</a>
