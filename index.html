@@ -62,9 +62,48 @@
         .link-button:hover {
             background-color: #0056b3;
         }
+                /* Correct count box style */
+        #correct-count-box {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Incorrect count box style */
+        #incorrect-count-box {
+            position: fixed;
+            top: 55px;
+            right: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
+        <!-- Correct count box -->
+    <div id="correct-count-box">
+        Correct Answers: <span id="correct-count">0</span>
+    </div>
+
+    <!-- Incorrect count box -->
+    <div id="incorrect-count-box">
+        Incorrect Answers: <span id="incorrect-count">0</span>
+    </div>
+
     <div class="link-container">
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/200" class="link-button">1~200 문제로 이동</a>
         <a href="https://networkaccesspoint.github.io/pcnse-quiz/400" class="link-button">201~400 문제로 이동</a>
@@ -9070,32 +9109,47 @@ Which set of steps should the engineer take to accomplish this objective?</p>
     </div>
     
     <script>
-        function checkAnswer(questionName, correctAnswers, resultId, answerId) {
-            const selectedAnswers = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
-                                          .map(input => input.value);
-            const resultElement = document.getElementById(resultId);
-            const answerElement = document.getElementById(answerId);
+        
+          let correctCount = 0; // Correct 카운트를 저장할 변수
+          let incorrectCount = 0; // Incorrect 카운트를 저장할 변수
 
-            // Check if the selected answers match the correct answers
-            if (arraysEqual(selectedAnswers, correctAnswers)) {
-                resultElement.innerText = 'Correct!';
-                resultElement.style.color = 'green';
-            } else {
-                resultElement.innerText = 'Incorrect!';
-                resultElement.style.color = 'red';
-            }
+    function checkAnswer(questionName, correctAnswers, resultId, answerId) {
+        const selectedAnswers = Array.from(document.querySelectorAll(`input[name="${questionName}"]:checked`))
+                                      .map(input => input.value);
+        const resultElement = document.getElementById(resultId);
+        const answerElement = document.getElementById(answerId);
 
-            // Show the correct answers
-            answerElement.innerText = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'}: ${correctAnswers.map(letter => 
-                document.querySelector(`input[name="${questionName}"][value="${letter}"]`).parentElement.innerText.trim()).join('  ,  ')}`;
+        // Check if the selected answers match the correct answers
+        if (arraysEqual(selectedAnswers, correctAnswers)) {
+            resultElement.innerText = 'Correct!';
+            resultElement.style.color = 'green';
+            correctCount++; // Correct 카운트 증가
+        } else {
+            resultElement.innerText = 'Incorrect!';
+            resultElement.style.color = 'red';
+            incorrectCount++; // Incorrect 카운트 증가
         }
 
-        function arraysEqual(a, b) {
-            if (a.length !== b.length) return false;
-            a.sort();
-            b.sort();
-            return a.every((val, index) => val === b[index]);
-        }
+        // Show the correct answers
+        answerElement.innerText = `The correct answer${correctAnswers.length > 1 ? 's are' : ' is'}: ${correctAnswers.map(letter => 
+            document.querySelector(`input[name="${questionName}"][value="${letter}"]`).parentElement.innerText.trim()).join('  ,  ')}`;
+
+        // 카운트 업데이트
+        updateCounts();
+    }
+
+    function arraysEqual(a, b) {
+        if (a.length !== b.length) return false;
+        a.sort();
+        b.sort();
+        return a.every((val, index) => val === b[index]);
+    }
+
+    // Correct 및 Incorrect 카운트를 업데이트하는 함수
+    function updateCounts() {
+        document.getElementById('correct-count').innerText = correctCount;
+        document.getElementById('incorrect-count').innerText = incorrectCount;
+    }
                  // 각 문제별로 currentIndex를 관리하기 위한 객체
         const currentIndexes = {};
 
@@ -9134,7 +9188,7 @@ Which set of steps should the engineer take to accomplish this objective?</p>
             for (let i = 1; i <= numOptions; i++) {
                 document.getElementById('order' + i + '_' + questionId).value = '';
             }
-        }         
+        }     
     </script>
 </body>
 </html>
