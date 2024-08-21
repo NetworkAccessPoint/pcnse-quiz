@@ -43,13 +43,15 @@
         }
         .link-container {
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap; /* Flexbox에서 줄바꿈이 가능하도록 설정 */
+            justify-content: center; /* 버튼들을 중앙에 배치 */
             margin-top: 50px;
             margin-bottom: 50px;
+            gap: 10px; /* 버튼 간의 간격 설정 */
+
         }
         .link-button {
             padding: 10px 20px;
-            margin: 0 10px;
             font-size: 16px;
             text-align: center;
             color: white;
@@ -57,8 +59,10 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            flex: 1 1 45%; /* 각 버튼이 줄어들 수 있고, 화면 너비의 약 45%를 차지함 */
+            box-sizing: border-box; /* 패딩과 테두리가 요소의 전체 너비와 높이에 포함되도록 함 */
+            min-width: 150px; /* 버튼의 최소 너비를 설정하여 지나치게 작아지지 않도록 함 */
         }
-
         .link-button:hover {
             background-color: #0056b3;
         }
@@ -77,6 +81,20 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
+        /* Incorrect count box style */
+        #incorrect-count-box {
+            position: fixed;
+            top: 55px;
+            right: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body>
