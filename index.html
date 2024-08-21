@@ -43,15 +43,15 @@
         }
         .link-container {
             display: flex;
-            justify-content: center;
+            flex-wrap: wrap; /* Flexbox에서 줄바꿈이 가능하도록 설정 */
+            justify-content: center; /* 버튼들을 중앙에 배치 */
             margin-top: 50px;
             margin-bottom: 50px;
-            flex-wrap: wrap; /* Flexbox items will wrap to the next line if they overflow */
+            gap: 10px; /* 버튼 간의 간격 설정 */
 
         }
         .link-button {
             padding: 10px 20px;
-            margin: 0 10px;
             font-size: 16px;
             text-align: center;
             color: white;
@@ -59,22 +59,13 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
-            flex: 1; /* Allow the button to grow and shrink as necessary */
-            max-width: 200px; /* Set a maximum width to ensure buttons don't get too large */
-            box-sizing: border-box; /* Include padding in width calculation */
+            flex: 1 1 45%; /* 각 버튼이 줄어들 수 있고, 화면 너비의 약 45%를 차지함 */
+            box-sizing: border-box; /* 패딩과 테두리가 요소의 전체 너비와 높이에 포함되도록 함 */
+            min-width: 150px; /* 버튼의 최소 너비를 설정하여 지나치게 작아지지 않도록 함 */
         }
-
         .link-button:hover {
             background-color: #0056b3;
         }
-        /* Media query for screens smaller than 600px */
-        @media (max-width: 600px) {
-            .link-button {
-                font-size: 14px; /* Reduce font size */
-                padding: 8px 16px; /* Adjust padding for smaller screens */
-                flex: 1 1 100%; /* Buttons take full width on small screens */
-                max-width: 100%; /* Ensure buttons stretch across the entire screen */
-            }
                 /* Correct count box style */
         #correct-count-box {
             position: fixed;
