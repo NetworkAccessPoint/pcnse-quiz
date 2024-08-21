@@ -46,6 +46,8 @@
             justify-content: center;
             margin-top: 50px;
             margin-bottom: 50px;
+            flex-wrap: wrap; /* Flexbox items will wrap to the next line if they overflow */
+
         }
         .link-button {
             padding: 10px 20px;
@@ -57,11 +59,22 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            flex: 1; /* Allow the button to grow and shrink as necessary */
+            max-width: 200px; /* Set a maximum width to ensure buttons don't get too large */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .link-button:hover {
             background-color: #0056b3;
         }
+        /* Media query for screens smaller than 600px */
+        @media (max-width: 600px) {
+            .link-button {
+                font-size: 14px; /* Reduce font size */
+                padding: 8px 16px; /* Adjust padding for smaller screens */
+                flex: 1 1 100%; /* Buttons take full width on small screens */
+                max-width: 100%; /* Ensure buttons stretch across the entire screen */
+            }
                 /* Correct count box style */
         #correct-count-box {
             position: fixed;
