@@ -9161,11 +9161,11 @@ Which set of steps should the engineer take to accomplish this objective?</p>
   function checkAnswer(questionName, correctAnswers, resultId, answerId) {
     // 선택된 체크박스들을 가져옴
     const checkboxes = document.querySelectorAll(`input[name="${questionName}"]:checked`);
-    let selectedAnswers = Array.from(checkboxes).map(cb =>.value);
+    let selectedAnswers = Array.from(checkboxes).map(cb => cb.value);
 
     // 선택된 답안이 정답과 일치하는지 확인
     const isCorrect = selectedAnswers.length === correctAnswers.length &&
-             selectedAnswers.every(answer =>rrectAnswers.includes(answer));
+             selectedAnswers.every(answer => correctAnswers.includes(answer));
 
     // 결과를 표시할 영역
     const resultDiv = document.getElementById(resultId);
