@@ -92,6 +92,7 @@
 
             const questionText = document.createElement('p');
             questionText.textContent = question.questionText;
+            questionText.style.fontSize = '1.1em';  // 글씨 크기 키우기
             questionDiv.appendChild(questionText);
 
             // 이미지 추가 부분
@@ -99,7 +100,7 @@
                 const image = document.createElement('img');
                 image.src = question.imageUrl;
                 image.alt = `Question ${index + 1} image`;
-                image.style.width = '70%';
+                image.style.width = '82%';
                 image.style.height = 'auto';
                 image.style.display = 'block';
                 image.style.margin = '0 auto';
