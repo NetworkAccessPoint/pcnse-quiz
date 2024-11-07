@@ -96,12 +96,13 @@
 
             // 이미지 추가 부분
             if (question.imageUrl) {
-                const image = document.createElement('img'); // 이미지 요소 생성
+                const image = document.createElement('img');
                 image.src = question.imageUrl;
                 image.alt = `Question ${index + 1} image`;
+                image.style.width = '70%';
+                image.style.height = 'auto';
                 image.style.display = 'block';
                 image.style.margin = '0 auto';
-                image.style.marginBottom = '15px';
                 questionDiv.appendChild(image);
             }
 
