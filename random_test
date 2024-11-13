@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500문제 퀴즈 사이트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            word-break: keep-all;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .result {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>500문제 개인정보 퀴즈</h1>
+    <div id="quizContainer"></div>
+
+<script>
+    // 문제 데이터를 JavaScript 객체로 정의
+    const questions = [
+        {
+            questionText: "01 개인정보의 정의와 관련하여 다음 설명 중 틀린 것을 고르시오.?",
+            options: [
+                "① 사망자의 정보는 유족과의 관계를 알 수 있다면 유족의 개인정보에 해당한다.",
+                "② 개인의 휴대폰번호, 집주소는 개인정보에 해당할 수 있다.",
+                "③ 개인정보를 결합하여 개인을 식별할 때는 해킹 등 불법적인 방법으로 취득한 정보까지 포함한다고 볼 수는 없다.",
+                "④ ④ 처리란 개인정보의 수집, 생성, 연계, 연동, 기록, 저장，보유, 가공, 편집, 검색, 출력, 정정, 복구, 이용, 제공, 공개, 파기，그 밖에 이와 유사한 행위를 말한다.",
+                "⑤ 개인정보는 해당 정보를 정보주체의 입장에서 합리적으로 활용될 가능성이 있는 수단을 고려하여 개인을 알아볼 수 있다면 개인정보에 해당한다."
+            ],
+            correctAnswer: [4],
+            //이미지가 추가될 경우 correctAnswer 마지막에 콤마추가 필요
+            imageUrl: "image/image.png"
+        },//콤마를 생활화 해주세요
+        {
+            questionText: "02 다음 중 개인정보와 관련한 용어에 대한 설명이 틀린 것을 고르시오.?",
+            options: [
+                "① 영상정보처리기기에 의하여 촬영•처리되는 영상정보 중 개인의 행동으로 개인을 식별할 수 있는 정보라면 개인정보영상정보에 해당한다.",
+                "② 개인정보를 가명처리하였다면 다시 원래의 상태로 복원하기 위해서는 추가정보가 필요하다.",
+                "③ 결합정보는 현재의 기술 수준이나 충분히 예견될 수 있는 기술 발전 등을 고려하여 시간이나 비용, 노력이 합리적으로 과다하게 수반되지 않아야 한다.",
+                "④ 익명정보는 개인정보로 보지 않으므로 정보주체의 동의를 받을 필요가 없다. ",
+                "⑤ 개인정보는 성명, 주민등록번호 및 영상 등 해당 정보만으로 특정 개인을 알아볼 수 있는 정보를 의미한다."
+            ],
+            correctAnswer: [4]
+        },//문제가 끝나는 곳 콤마처리 필수
+                {
+            questionText: "03 개인정보의 정의와 관련하여 다음 설명 중 옳은 것을 고르시오.?",
+            options: [
+                "① 개인정보보호법 상의 개인정보 정의로 개인정보의 주체는 자연인, 법인, 단체에 해당한다.",
+                "② 정보주체의 키, 몸무게는 개인정보에 해당하지 않는다.",
+                "③ 해당 정보만으로는 특정 개인을 알아볼 수 없더라도 다른 정보와 쉽게 결합하여 알아볼 수 있는 정보라도 개인정보가 될 수 있다.",
+                "④ 결합 가능성은 두 종 이상의 정보를 결합하기 위해서는 결합에 필요한 정보에 합법적으로 접근•입수할 수 있어야 함을 의미한다.",
+                "⑤ 디지털 형태가 아닌 수기 형태의 개인정보는 개인정보로 볼 수 없다."
+            ],
+            correctAnswer: [3]
+        },
+                        {
+            questionText: "04 개인정보의 정의와 관련하여 다음 설명 중 틀린 것을 고르시오. ?",
+            options: [
+                "① 법인의 대표 연락처, 이메일, 대표자의 주민등록번호는 원직적으로 개인정보가아니다.",
+                "② 특정 건물이나 아파트의 소유자가 자연인인 경우，그 건물이나 아파트의 주소도 개인정보가 될 수 있다.",
+                "③ 초고가의 컴퓨터를 이용하여 결합한 개인정보는 개인정보로 볼 수 없다.",
+                "④ 생년월일, 혈액형，휴대폰 전화번호 4자리 정보도 결합을 통해 특정개인을 식별한다면 개인정보가 될 수 있다.",
+                "⑤ 개인의 민감정보는 항상 개인정보에 해당한다고 볼 수 있다."
+            ],
+            correctAnswer: [0]
+        },
+                        {
+            questionText: "05 개인정보에 해당하는 않은 것으로 올바른 것은?",
+            options: [
+                "① 사망했거나 실종선고를 받은 자연인에 관한 정보의 유족정보는 개인정보가 아니다. ",
+                "② 코인거래소의 가상자산 지갑주소는 개인정보에 해당하지 않는다.",
+                "③ 개인의 혈액형이나 생년월일 정보는 개인정보에 해당하지 않는다.",
+                "④ 세대 공동현관의 출입번호는 개인정보에 해당하지 않는다.",
+                "⑤ 대표자를 포함한 임직원과 업무담당자의 이름, 자택주소 및 개인 연락처, 사진은 업무적으로는 개인정보가 아니나, 사적으로는 개인정보로 취급될 수 있다."
+            ],
+            correctAnswer: [3]
+        },
+                {
+            questionText: "06 개인정보에 해당하는 것으로 묶인 것은?",
+            options: [
+                "① ㄱ, ㄴ, ㄷ, ㄹ",
+                "② ㄱ, ㄴ, ㄷ, ㅁ",
+                "③ ㄱ, ㄴ, ㄷ, ㄹ,ㅁ",
+                "④ ㄱ, ㄴ, ㄷ, ㅁ, ㅂ",
+                "⑤ ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ"
+            ],
+            correctAnswer: [4],
+            imageUrl: "image/cppg01.png"
+        },
+                        {
+            questionText: "07 배송업체에서 물품을 배송시킬 때 배송 주소와 함께 공동현관 출입 번호를 수집하고 있다. 만일, 아파트 입주민 개별로 즉, 호수마다 다르게 공동현관 출입번호를 설정하는 경우 개인정보에 해당하는지 보기에서 가장 알맞은 것을 고르시오",
+            options: [
+                "①공동현관의 출입번호는 개인정보로 보기 어렵다.",
+                "② 개별 세대별로 출입번호가 부여된 경우 개인정보로 볼 수 있다.",
+                "③ 개인정보 보호법 제2조 제1호에 따르면 공동현관의 출입번호는 개인정보로 볼 수 있다.",
+                "④ 공동현관의 출입번호는 개인정보로 볼 수 없다.",
+                "⑤ 공동현관의 출입번호는 개인정보로 볼 수 있지만, 개인정보 수집•이용에 대한 동의를 받을 필요는 없다."
+            ],
+            correctAnswer: [1]
+        },
+                                {
+            questionText: "08 가상자산 거래소에서 고객의 가상자산 지갑주소만을 처리하는 경우, 아래의 주장 중 가장 정확한 것을 고르시오.",
+            options: [
+                "① 가상자산 지갑주소 자체만으로는 개인을 알아볼 수 없으므로 개인정보에 해당하지않는다.",
+                "② 가상자산 지갑주소는 고유한 공개키 암호화 기술로 생성되므로 개인정보에 해당한다. ",
+                "③ 가상자산 지갑주소는 가상자산 거래자를 표시하는 수단이므로 개인정보에 해당한다. ",
+                "④ 가상자산 지갑주소는 다른 정보와 결합하여 개인을 알아볼 수 있으므로 개인정보에 해당한다.",
+                "⑤ 가상자산 지갑주소는 ip주소와 연계될 수 있으므로 개인정보에 해당한다."
+            ],
+            correctAnswer: [3]
+        },
+                                        {
+            questionText: "01 다음 내용 중 프라이버시에 대한 설명이 아닌 것을 고르시오.",
+            options: [
+                "①  타인의 방해를 받지 않고 개인의 사적인 영역을 유지하고자 하는 이익 또는 권리를 통칭하는 개념이다.",
+                "②  한 개인이 다른 개인의 환경에 대한 침입 제한이 초점 및 집, 사무실과 같은 보호받아야 할 사적 영역과 관련(가정만이 아닌 직장과 같은 공개된 장소를 포함)한다. ",
+                "③ 개인을 알아볼수 있는 정보이며, 해당 정보만으로는 특정 개인을 알아볼 수없더라도 다른 정보와 쉽게 결합하여 알아볼 수 있는 정보를 의미한다. ",
+                "4 개인의 신체 또는 물리적 존재와 관련된 침해에 초점이 맞추어져 있으며, 유전자. 마약 검사 등과 같은 영역과 관련 있다.",
+                "⑤ 사적인 사항이 공개되는 것을 원치 않는 이익, 자신의 중요한 문제에 대해 자율적이고 독자적으로 결정을 내리고자 하는 이익의 두 가지 중요한 내용의 보호 법익을 가지고 있다."
+            ],
+            correctAnswer: [2]
+        },
+                                                {
+            questionText: "02 개인정보 자기결정권에 대한 설명이 아닌 것을 고르시오",
+            options: [
+                "① 개인정보자기결정권은 자신에 관한 정보가 언제 누구에게 어느 범위까지 알려지고또 이용되도록 할 것인지를 그 정보주체가 스스로 결정할 수 있는 권리이다.",
+                "②  인간의 존엄과 가치, 행복추구권을 규정한「헌 법」제 10 조 제 1 문에서 도출되는 일반적 인격권 및 「헌법」 제17조의 사생활의 비밀과 자유에 의하여 보장된다. ",
+                "③ 개인정보자기결정권의 보호대상이 되는 개인정보는 개인의 신체, 신념, 사회적 지위, 신분 등과 같이 개인의 인격주체성을 특징짓는 사항으로서 그 개인의 동일성을 식별할 수 있게 하는 일체의 정보이다. ",
+                "④ 개인정보의 조사·수집·보관·처리·이용 등의 행위는 모두 원칙적으로 개인정보 자기 결정권에 대한 제한에 해당 하지 않는다.",
+                "⑤  사사（私事）의 영역에 속하는 정보에 국한되지 않고 공적 생활에서 형성되었거나 이미 공개된 개인정보까지 포함한다."
+            ],
+            correctAnswer: [2]
+        },
+        {
+            questionText: "03 다음 보기에서 개인정보 라이프 사이클 관점에서 발생 가능한 프라이버시 침해 유형에 대한 내용이 아닌 것은?",
+            options: [
+                "① 정보의 수집 <br>-서비스 제공자가 개인정보의 수집 및 이용목적을 제시하지 않을 경우에프라이버시 문제가 발생할 수 있다.-서비스제공자가 동의 없이 개인정보를 수집 하게 될 경우 프라이버시 문제가 발생할 수 있다.-쿠기에 대한 설명 없이 이용자들의 쿠키를 수집하게 될 경우 프라이버시 문제가발생할 수 있다.개인정보처리자가 서비스 제공을 위하여 고객의 개인정보를 수집할때는 해당 서비스 제공을 위하여 필요한 최소한의 개인정보를 수집하여야 한다",
+                "②  개인정보 - 인적사항부터 지위, 상태, 교육, 건강, 재산, 문화활동 및 정치적 성형과 같은 내면의 비밀에 이르기까지 종류가 매우 다양함 - 정보주체가 특정 서비스에 가입할 때 직접적으로 제공하는 정보(제공정보) 뿐만이 아닌, 서비스를 이용하면서 생성되는 내역, 로그 등(생성정보)도 개인정보가 될 수 있음 ",
+                "③ 저장/관리 개인정보의 제휴 및 공유대상을 밝히지 않고 약관을 통해 포괄적 동의를 구하지 않게 되면 프라이버시 문제가 발생할 수 있다. 기업을 인수/합병하면서 아무런 고지 없이 개인정보를 넘기게 되면 프라이버시 문제가 발생할 수 있다. - 동일기업에서 운영하는 사이트들 간에 개인경로를 공유하게 되면 프라이버시 문제가 발생할 수 있다.",
+                "④ 이용/제공 - 타인의 개인정보를 무단으로 도용하여 사용하게 될 경우 프라이버시 문제가 발생할 수 있다. - 동의 없는 개인정보의 무단 제공 및 공유하게 되면 프라이버시 문제가 발생할 수 있다. 식당 또는 행사장의 운영이나 고객에 대한 서비스 제공을 위해 앱설치 또는 SNS 연계가 반드시 필요한 것은 아닌 경우, 고객에게 앱의 설치 또는SNS 연결 등을 요구하기 위해서는 고객의 선택적 동의를 받아야 한다.",
+                "⑤  폐기 - 개인정보에 관한 동의철회, 즉 탈퇴요구를 무시할 경우에 프라이버시 문제가 발생할 수 있다. 탈퇴 후에도 개인정보를 삭제하지 않게 되면 프라이버시 문제가 발생할 수 있다. 탈퇴메뉴가 존재하지 않거나 탈퇴의 방법과 절차에 대한 안내가 없게 될 경우 프라이버시 문제가 발생할 수 있다.개인정보처리자는 선택적으로동의할 수 있는 사항을 동의하지 않거나 정보주체가 목적 외 이용·내지 제3자 제공에 대해 별도의 동의를 하지 아니한다는 이유로 정보주체에게 재화 또는 서비스의 제공을 거부하여서는 안된다."
+            ],
+            correctAnswer: [3]
+        },
+                {
+            questionText: "04 다음 내용 중 옳지 않은 것을 고르시오.",
+            options: [
+                "① 개인정보 보호법 제35조(개인정보의 열람)",
+                "② 개인정보 보호법 제36조(개인정보의 정정·삭제)",
+                "③ 개인정보 보호법 제37조(개인정보의 처리정지 등)",
+                "④ 개인정보 보호법 제38조(권리행사의 방법 및 절차)",
+                "⑤ 개인정보 안전성 확보조치."
+            ],
+            correctAnswer: [4]
+        },
+         {
+            questionText: "01 개인정보의 유형에 대한 설명 중 틀린 것을 고르시오. ?",
+            options: [
+                "① 온라인 서비스를 이용하기 위한 회원 가입 과정에서 제공하는 신상정보는 제공정보에 해당한다.",
+                "② 서비스를 이용하는 과정에서 이용자의 서비스 이용기록이나 접속로그 쿠키는 생성정보에 해당한다.",
+                "③ E-Mail 주소, 전화통화내역, 로그파일, 쿠키는 기호, 성향 정보에 해당한다.",
+                "④ 대줄 및 담보설정 내역, 신용카드번호, 통장계좌번호, 신용평가 정보는 신용정보에 해당한다. ",
+                "⑤ 흡연여부, 음주량, 선호하는 스포츠 및 오락, 여가활동, 도박성향 등은 습관 및 취미정보에 해당한다."
+            ],
+            correctAnswer: [2]
+        }
+        //마지막 문제만 콤마를 붙이지 않습니다.
+    ];
+
+function loadQuestions() {
+    const quizContainer = document.getElementById('quizContainer');
+
+    // questions 배열을 무작위로 섞기
+    const shuffledQuestions = questions.sort(() => Math.random() - 0.5);
+
+    shuffledQuestions.forEach((question, index) => {
+        // 현재 options 배열의 인덱스와 값을 쌍으로 묶어서 섞음
+        const optionsWithIndices = question.options.map((option, i) => ({ option, originalIndex: i }));
+        optionsWithIndices.sort(() => Math.random() - 0.5);
+
+        // 섞인 options 배열과 correctAnswer 인덱스를 새롭게 설정
+        question.options = optionsWithIndices.map(item => item.option);
+        const updatedCorrectAnswers = question.correctAnswer.map(answerIndex => 
+            optionsWithIndices.findIndex(item => item.originalIndex === answerIndex)
+        );
+        question.correctAnswer = updatedCorrectAnswers;
+
+        const questionDiv = document.createElement('div');
+        questionDiv.classList.add('question');
+        questionDiv.id = `question${index}`;
+
+        questionDiv.style.backgroundColor = '#f8f9fa';
+        questionDiv.style.padding = '20px';
+        questionDiv.style.border = '1px solid #ddd';
+        questionDiv.style.borderRadius = '8px';
+        questionDiv.style.marginBottom = '40px';
+        questionDiv.style.lineHeight = '2.0';
+
+        const questionText = document.createElement('p');
+        questionText.textContent = question.questionText;
+        questionText.style.fontSize = '1.1em';
+        questionDiv.appendChild(questionText);
+
+        if (question.imageUrl) {
+            const image = document.createElement('img');
+            image.src = question.imageUrl;
+            image.alt = `Question ${index + 1} image`;
+            image.style.width = '83%';
+            image.style.height = 'auto';
+            image.style.display = 'block';
+            image.style.margin = '0 auto 20px';
+            questionDiv.appendChild(image);
+        }
+
+        const optionsContainer = document.createElement('div');
+        optionsContainer.style.marginBottom = '15px';
+        question.options.forEach((option, optionIndex) => {
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginLeft = '10px';
+            label.style.whiteSpace = 'normal';
+            label.style.lineHeight = '1.9';
+            label.style.textIndent = '-30px';
+            label.style.paddingLeft = '35px';
+            label.style.wordBreak = 'keep-all';
+
+            const checkBox = document.createElement('input');
+            checkBox.type = 'checkbox';
+            checkBox.name = `q${index}`;
+            checkBox.value = optionIndex;
+            checkBox.style.marginRight = '10px';
+
+            label.appendChild(checkBox);
+            label.appendChild(document.createTextNode(option));
+            optionsContainer.appendChild(label);
+        });
+        questionDiv.appendChild(optionsContainer);
+
+        const submitButton = document.createElement('button');
+        submitButton.textContent = "정답 제출";
+        submitButton.style.backgroundColor = "#6c757d";
+        submitButton.style.color = "white";
+        submitButton.style.border = "none";
+        submitButton.style.padding = "10px 15px";
+        submitButton.style.marginTop = "10px";
+        submitButton.style.borderRadius = "4px";
+        submitButton.style.cursor = "pointer";
+        submitButton.style.fontSize = "16px";
+        submitButton.onmouseover = () => submitButton.style.backgroundColor = "#5a6268";
+        submitButton.onmouseout = () => submitButton.style.backgroundColor = "#6c757d";
+        submitButton.onclick = () => checkAnswer(index, question.correctAnswer);
+
+        questionDiv.appendChild(submitButton);
+        questionDiv.appendChild(document.createElement('br'));
+
+        const resultDiv = document.createElement('div');
+        resultDiv.classList.add('result');
+        resultDiv.id = `result${index}`;
+        resultDiv.style.marginTop = '10px';
+        questionDiv.appendChild(resultDiv);
+
+        quizContainer.appendChild(questionDiv);
+    });
+}
+
+
+    // 정답 확인 함수
+    function checkAnswer(questionIndex, correctAnswers) {
+        const selectedOptions = document.querySelectorAll(`input[name="q${questionIndex}"]:checked`);
+        const resultDiv = document.getElementById(`result${questionIndex}`);
+
+        if (selectedOptions.length > 0) {
+            const selectedValues = Array.from(selectedOptions).map(option => parseInt(option.value));
+            const isCorrect = correctAnswers.every(answer => selectedValues.includes(answer)) && correctAnswers.length === selectedValues.length;
+
+            if (isCorrect) {
+                resultDiv.textContent = "정답입니다!";
+                resultDiv.classList.add("correct");
+                resultDiv.classList.remove("wrong");
+            } else {
+                resultDiv.textContent = `오답입니다.`;
+                resultDiv.classList.add("wrong");
+                resultDiv.classList.remove("correct");
+            }
+        } else {
+            resultDiv.textContent = "답을 선택해 주세요.";
+            resultDiv.classList.add("wrong");
+            resultDiv.classList.remove("correct");
+        }
+    }
+
+    // 페이지 로드 시 문제 로드
+    loadQuestions();
+</script>
+
+</body>
+</html>
